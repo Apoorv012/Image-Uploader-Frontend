@@ -1,0 +1,103 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #000;
+  height: 50px;
+}
+
+.logo-container {
+  display: flex; 
+  align-items: center;
+}
+
+.logo {
+  width: 24px;
+  height: 24px;
+  margin-inline: 16px;
+}
+
+.logo-text {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.btn {
+  margin-inline: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  font-size: medium;
+  align-items: center;
+  cursor: pointer;
+  text-align: center;
+}
+
+.login-btn {
+  background-color: white;
+  color: #022ECC;
+  border-radius: 10px;
+  border: none;
+}
+
+.login-btn:hover {
+  background-color: #F0F0F0;
+}
+
+.signup-btn {
+  background-color: #022ECC;
+  color: white;
+  border-radius: 10px;
+  border: none;
+}
+
+.signup-btn:hover {
+  background-color: #0A1DFF;
+}
+
+main {
+  height: 80vh;
+}
+
+.main-text {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.mid-line {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 100px;
+}
+
+.mid-line h3 {
+  font-weight: 400;
+}
+
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  border-top: 1px solid #000;
+}
+
+.upload-btn-container {
+  display: flex;
+  justify-content: center;
+}
+
+.upload-btn {
+  background-color: #022ECC;
+  color: white;
+  border-radius: 10px;
+  border: none;
+  font-size: large;
+  margin-top: 50px;
+  padding-inline: 20px;
+}
+
+.upload-btn:hover {
+  background-color: #0A1DFF;
+}
