@@ -1,6 +1,17 @@
 import './App.css'
+import { useRef } from 'react';
 
 function App() {
+  const hiddenFileUpload = useRef(null);
+
+  const handleFileUpload = (f) => {
+    console.log("file uploaded");
+  };
+
+  const handleUploadButtonClicked = () => {
+    hiddenFileUpload.current.click();
+  };
+
   return (
     <>
       <nav className='navbar'>
@@ -20,7 +31,13 @@ function App() {
           <h3>File Type: JPEG, PNG, GIF, etc.</h3>
         </div>
         <div className='upload-btn-container'>
-          <button className='btn upload-btn'>Upload</button>
+          <input type="file" accept='image/*' style={{ display: 'none' }}
+            onChange={handleFileUpload} id='file-upload' ref={hiddenFileUpload} />
+          <label htmlFor='file-upload'>
+            <button className='btn upload-btn' onClick={handleUploadButtonClicked}>
+              Choose a file
+            </button>
+          </label>
         </div>
       </main>
       <footer>
