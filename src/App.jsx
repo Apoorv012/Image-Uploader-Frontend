@@ -1,11 +1,13 @@
 import './App.css'
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 
 function App() {
   const hiddenFileUpload = useRef(null);
+  const [filename, setFilename] = useState('');
 
   const handleFileUpload = (f) => {
     console.log("file uploaded");
+    setFilename(f.target.files[0].name)
   };
 
   const handleUploadButtonClicked = () => {
@@ -39,6 +41,8 @@ function App() {
             </button>
           </label>
         </div>
+        <p style={{ textAlign: 'center', paddingTop: 10, height: 20 }}>{filename}</p>
+        <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p>
       </main>
       <footer>
         <p>Apoorv Mittal © 2024</p>
