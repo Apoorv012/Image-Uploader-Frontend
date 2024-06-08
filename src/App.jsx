@@ -4,7 +4,8 @@ import axios from 'axios';
 
 function App() {
   const hiddenFileUploadRef = useRef(null);
-  const [filename, setFilename] = useState('none');
+  const [filename, setFilename] = useState('');
+  const [fileURL, setFileURL] = useState('');
 
   const handleFileUpload = (f) => {
     try {
@@ -33,13 +34,17 @@ function App() {
     axios.post(`${baseApiUrl}/api/v1/image/upload`, formData)
       .then(res => {
         console.log(res);
+        setFileURL(res.data.url);        
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-
+  const handleCopyURLClick = () => {
+    console.log("copy url clicked");
+    navigator.clipboard.writeText(fileURL);
+  };
 
   return (
     <>
@@ -74,14 +79,14 @@ function App() {
           <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit}>Upload Image</button>
         </form>
 
-        <div className="copy-container">
+        {fileURL && <div className="copy-container">
           <div className='copy-content'>
-            <p id="text-to-copy">This is the text you can copy.</p>
-            <button className='copy-btn' onclick="copyText()">
+            <p id="text-to-copy">{fileURL}</p>
+            <button className='copy-btn' onClick={handleCopyURLClick}>
               <img className='copysvg' src="/copy.svg" alt="copy_img" />
             </button>
           </div>
-        </div>
+        </div>}
       </main>
       <footer>
         <p>Apoorv Mittal © 2024</p>
