@@ -75,10 +75,10 @@ function App() {
         </form>
 
         <div className="copy-container">
-          <div className='copy-div'>
+          <div className='copy-content'>
             <p id="text-to-copy">This is the text you can copy.</p>
-            <button className='btn copy-btn' onclick="copyText()">
-              <img id='copy-icon' src="/copy.svg" alt="copy_img" />
+            <button className='copy-btn' onclick="copyText()">
+              <img className='copysvg' src="/copy.svg" alt="copy_img" />
             </button>
           </div>
         </div>
