@@ -101,3 +101,47 @@ footer {
 .upload-btn:hover {
   background-color: #0A1DFF;
 }
+
+.copy-container {
+  display: flex;
+  justify-content: center;
+}
+  
+.copy-div {
+  background-color: gainsboro;
+  padding: 10px 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+#text-to-copy {
+  margin-inline: 10px;
+}
+
+.copy-btn {
+  /* background-color: gray; */
+  border: none;
+  padding: 10px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
+}
+
+#copy-icon {
+  background-color: red;
+  padding: 5px;
+  fill: white;
+  /* position: relative; */
+  width: 20px;
+  height: 20px;
+  margin-top: -50%;
+  margin-left: -50%;
+
+}

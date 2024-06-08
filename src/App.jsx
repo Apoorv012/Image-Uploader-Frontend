@@ -7,20 +7,13 @@ function App() {
   const [filename, setFilename] = useState('none');
 
   const handleFileUpload = (f) => {
-    console.log("file uploaded");
-    const file = f.target.files[0];
-    setFilename(file.name);
-    // // console.log(file);
-    // const baseApiUrl = import.meta.env.VITE_BACKEND_API;
-    // try {
-    //   const respose = axios.post(`${baseApiUrl}/api/v1/image/upload`, file);
-    // }
-    // catch (err) {
-    //   console.log(err);
-    // }
-    // finally {
-    //   console.log("finally");
-    // }
+    try {
+      console.log("file uploaded");
+      const file = f.target.files[0];
+      setFilename(file.name);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleUploadButtonClicked = () => {
@@ -80,6 +73,15 @@ function App() {
         <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p>
           <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit}>Upload Image</button>
         </form>
+
+        <div className="copy-container">
+          <div className='copy-div'>
+            <p id="text-to-copy">This is the text you can copy.</p>
+            <button className='btn copy-btn' onclick="copyText()">
+              <img id='copy-icon' src="/copy.svg" alt="copy_img" />
+            </button>
+          </div>
+        </div>
       </main>
       <footer>
         <p>Apoorv Mittal © 2024</p>
