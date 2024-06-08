@@ -1,18 +1,52 @@
 import './App.css'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import axios from 'axios';
 
 function App() {
-  const hiddenFileUpload = useRef(null);
-  const [filename, setFilename] = useState('');
+  const hiddenFileUploadRef = useRef(null);
+  const [filename, setFilename] = useState('none');
 
   const handleFileUpload = (f) => {
     console.log("file uploaded");
-    setFilename(f.target.files[0].name)
+    const file = f.target.files[0];
+    setFilename(file.name);
+    // // console.log(file);
+    // const baseApiUrl = import.meta.env.VITE_BACKEND_API;
+    // try {
+    //   const respose = axios.post(`${baseApiUrl}/api/v1/image/upload`, file);
+    // }
+    // catch (err) {
+    //   console.log(err);
+    // }
+    // finally {
+    //   console.log("finally");
+    // }
   };
 
   const handleUploadButtonClicked = () => {
-    hiddenFileUpload.current.click();
+    hiddenFileUploadRef.current.click();
   };
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    console.log("form submitted");
+    const file = hiddenFileUploadRef.current.files[0];
+    console.log(file);
+
+    const baseApiUrl = import.meta.env.VITE_BACKEND_API;
+    const formData = new FormData();
+    
+    formData.append('image', file);
+    axios.post(`${baseApiUrl}/api/v1/image/upload`, formData)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+
 
   return (
     <>
@@ -32,17 +66,20 @@ function App() {
           <h3>Max size : 32 MB</h3>
           <h3>File Type: JPEG, PNG, GIF, etc.</h3>
         </div>
-        <div className='upload-btn-container'>
-          <input type="file" accept='image/*' style={{ display: 'none' }}
-            onChange={handleFileUpload} id='file-upload' ref={hiddenFileUpload} />
-          <label htmlFor='file-upload'>
-            <button className='btn upload-btn' onClick={handleUploadButtonClicked}>
-              Choose a file
-            </button>
-          </label>
-        </div>
+        <form id='upload-form' onSubmit={(e) => e.preventDefault()}>
+          <div className='upload-btn-container'>
+            <input type="file" accept='image/*' style={{ display: 'none' }} name='image'
+              onChange={handleFileUpload} id='file-upload' ref={hiddenFileUploadRef} />
+            <label htmlFor='file-upload'>
+              <button className='btn upload-btn' onClick={handleUploadButtonClicked}>
+                Choose a file
+              </button>
+            </label>
+          </div>
         <p style={{ textAlign: 'center', paddingTop: 10, height: 20 }}>{filename}</p>
         <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p>
+          <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit}>Upload Image</button>
+        </form>
       </main>
       <footer>
         <p>Apoorv Mittal © 2024</p>
