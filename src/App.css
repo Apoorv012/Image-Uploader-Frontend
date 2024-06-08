@@ -107,41 +107,37 @@ footer {
   justify-content: center;
 }
   
-.copy-div {
+.copy-content {
   background-color: gainsboro;
-  padding: 10px 10px;
+  padding: 16px;
   border-radius: 5px;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   font-size: 1.1rem;
 }
 
-#text-to-copy {
-  margin-inline: 10px;
-}
 
 .copy-btn {
-  /* background-color: gray; */
   border: none;
-  padding: 10px 10px;
+  border-radius: 4px;
+  background-color: red;
   text-align: center;
-  text-decoration: none;
-  display: inline-block;
   font-size: 16px;
   cursor: pointer;
-  height: 30px;
-  width: 30px;
+  margin-left: 0.75rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
 }
 
-#copy-icon {
-  background-color: red;
-  padding: 5px;
-  fill: white;
+.copysvg {
   /* position: relative; */
-  width: 20px;
-  height: 20px;
-  margin-top: -50%;
-  margin-left: -50%;
+  padding: 0.3rem;
+  width: 25px;
+  height: 25px;
+justify-content: center;
 
 }
