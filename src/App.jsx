@@ -27,6 +27,11 @@ function App() {
     const file = hiddenFileUploadRef.current.files[0];
     console.log(file);
 
+    if (!file) {
+      alert("Please select a file to upload.");
+      return;
+    }
+
     const baseApiUrl = import.meta.env.VITE_BACKEND_API;
     const formData = new FormData();
     
@@ -34,7 +39,10 @@ function App() {
     axios.post(`${baseApiUrl}/api/v1/image/upload`, formData)
       .then(res => {
         console.log(res);
-        setFileURL(res.data.url);        
+
+        const currentURL = window.location.href;
+
+        setFileURL(`${currentURL}image/${res.data.code}`);
       })
       .catch(err => {
         console.log(err);
@@ -53,10 +61,10 @@ function App() {
           <img className='logo' src="/upload.svg" alt="upload_img" />
           <h1 className='logo-text'>Image Uploader</h1>
         </div>
-        <div>
+        {/* <div>
           <button className='btn login-btn'>Log In</button>
           <button className='btn signup-btn'>Sign Up</button>
-        </div>
+        </div> */}
       </nav>
       <main>
         <h1 className='main-text'>Upload and share images</h1>
@@ -75,7 +83,7 @@ function App() {
             </label>
           </div>
         <p style={{ textAlign: 'center', paddingTop: 10, height: 20 }}>{filename}</p>
-        <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p>
+        {/* <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p> */}
           <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit}>Upload Image</button>
         </form>
 
