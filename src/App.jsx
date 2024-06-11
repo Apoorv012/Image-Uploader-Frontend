@@ -12,8 +12,10 @@ function App() {
       console.log("file uploaded");
       const file = f.target.files[0];
       setFilename(file.name);
-    } catch (error) {
-      console.log(error);
+      setFileURL('');
+      } catch (error) {
+        console.log(error);
+        setFileURL('');
     }
   };
 
@@ -47,6 +49,7 @@ function App() {
       .catch(err => {
         console.log(err);
         console.error(`${err.response.data.message} : ${err.response.data.error}`);
+        setFileURL('');
       });
   };
 
