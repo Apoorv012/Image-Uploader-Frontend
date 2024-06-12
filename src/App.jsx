@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const hiddenFileUploadRef = useRef(null);
+  const uploadButtonRef = useRef(null);
   const [filename, setFilename] = useState('');
   const [fileURL, setFileURL] = useState('');
 
@@ -26,6 +27,9 @@ function App() {
   };
 
   const handleFormSubmit = (e) => {
+    // disable uploadButtonRef
+    uploadButtonRef.current.disabled = true;
+
     e.preventDefault();
     console.log("form submitted");
     const file = hiddenFileUploadRef.current.files[0];
@@ -33,6 +37,7 @@ function App() {
 
     if (!file) {
       toast("Please select a file to upload", { type: 'warning' });
+      uploadButtonRef.current.disabled = false;
       return;
     }
 
@@ -50,11 +55,13 @@ function App() {
 
         setFileURL(`${currentURL}image/${res.data.code}`);
         toast.update(toastId, { render: "Image uploaded succesfully!", type: "success", isLoading: false, autoClose: 4000 });
+        uploadButtonRef.current.disabled = false;
       })
       .catch(err => {
         if (err.message === 'Network Error') {
           // toast("Network Error. Please try again later", { type: 'error' });
           toast.update(toastId, {render: "Network Error. Please try again later", type: "error", isLoading: false, autoClose: 4000 });
+          uploadButtonRef.current.disabled = false;
           return;
         }
 
@@ -65,10 +72,12 @@ function App() {
           if (err.response.data.error.startsWith("File size too large")) {
             // toast("File too large. Please upload a file less than 10 MB", { type: 'error' });
             toast.update(toastId, {render: "File too large. Please upload a file less than 10 MB", type: "error", isLoading: false, autoClose: 4000 });
+            uploadButtonRef.current.disabled = false;
             return;
           }
 
           toast.update(toastId, {render: err.response.data.error, type: "error", isLoading: false, autoClose: 4000 });
+          uploadButtonRef.current.disabled = false;
           return;
         }
 
@@ -76,7 +85,8 @@ function App() {
         toast("An error occurred. Please try again later", { type: 'error' });
         
         setFileURL('');
-      });
+        uploadButtonRef.current.disabled = false;
+    });
   };
 
   const handleCopyURLClick = () => {
@@ -115,7 +125,7 @@ function App() {
           </div>
         <p style={{ textAlign: 'center', paddingTop: 10, height: 20 }}>{filename}</p>
         {/* <p style={{ textAlign: 'center', padding: 30 }}>For custom URL, please login first.</p> */}
-          <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit}>Upload Image</button>
+          <button style={{ display: "block", marginInline: "auto", marginBlock: 20, padding: 5 }} type="submit" onClick={handleFormSubmit} ref={uploadButtonRef}>Upload Image</button>
         </form>
 
         {fileURL && <div className="copy-container">
