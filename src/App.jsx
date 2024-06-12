@@ -13,8 +13,14 @@ function App() {
 
   const handleFileUpload = (f) => {
     try {
-      console.log("file uploaded");
       const file = f.target.files[0];
+      console.log("file uploaded", file.size);
+      if (file.size > 10485760) {
+        toast("File too large. Please upload a file less than 10 MB", { type: 'error' });
+        setFileURL('');
+        hiddenFileUploadRef.current.value = '';
+        return;
+      }
       setFilename(file.name);
       setFileURL('');
       } catch (error) {
