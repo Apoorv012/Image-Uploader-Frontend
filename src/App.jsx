@@ -9,6 +9,7 @@ function App() {
   const uploadButtonRef = useRef(null);
   const [filename, setFilename] = useState('');
   const [fileURL, setFileURL] = useState('');
+  const [fileServerURL, setFileServerURL] = useState('');
 
   const handleFileUpload = (f) => {
     try {
@@ -54,6 +55,7 @@ function App() {
         const currentURL = window.location.href;
 
         setFileURL(`${currentURL}image/${res.data.code}`);
+        setFileServerURL(res.data.url);
         toast.update(toastId, { render: "Image uploaded succesfully!", type: "success", isLoading: false, autoClose: 4000 });
         uploadButtonRef.current.disabled = false;
       })
@@ -135,6 +137,7 @@ function App() {
               <img className='copysvg' src="/copy.svg" alt="copy_img" />
             </button>
           </div>
+          <img style={{maxHeight: 100, maxWidth: 200, marginLeft: 10, borderRadius: 5}} src={fileServerURL} alt="uploaded_img" />
         </div>}
       </main>
       <footer>
