@@ -1,6 +1,8 @@
 import './App.css'
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const hiddenFileUploadRef = useRef(null);
@@ -30,7 +32,7 @@ function App() {
     console.log(file);
 
     if (!file) {
-      alert("Please select a file to upload.");
+      toast("Please select a file to upload", { type: 'warning' });
       return;
     }
 
@@ -38,6 +40,8 @@ function App() {
     const formData = new FormData();
     
     formData.append('image', file);
+
+    const toastId = toast.loading("Please wait...");
     axios.post(`${baseApiUrl}/api/v1/image/upload`, formData)
       .then(res => {
         console.log(res);
@@ -45,10 +49,32 @@ function App() {
         const currentURL = window.location.href;
 
         setFileURL(`${currentURL}image/${res.data.code}`);
+        toast.update(toastId, { render: "Image uploaded succesfully!", type: "success", isLoading: false, autoClose: 4000 });
       })
       .catch(err => {
-        console.log(err);
-        console.error(`${err.response.data.message} : ${err.response.data.error}`);
+        if (err.message === 'Network Error') {
+          // toast("Network Error. Please try again later", { type: 'error' });
+          toast.update(toastId, {render: "Network Error. Please try again later", type: "error", isLoading: false, autoClose: 4000 });
+          return;
+        }
+
+        console.log("err", err);
+        // console.error(`${err.response.data.message} : ${err.response.data.error}`);
+
+        if (err.response.data.error) {
+          if (err.response.data.error.startsWith("File size too large")) {
+            // toast("File too large. Please upload a file less than 10 MB", { type: 'error' });
+            toast.update(toastId, {render: "File too large. Please upload a file less than 10 MB", type: "error", isLoading: false, autoClose: 4000 });
+            return;
+          }
+
+          toast.update(toastId, {render: err.response.data.error, type: "error", isLoading: false, autoClose: 4000 });
+          return;
+        }
+
+        toast.dismiss(toastId);
+        toast("An error occurred. Please try again later", { type: 'error' });
+        
         setFileURL('');
       });
   };
@@ -71,9 +97,10 @@ function App() {
         </div> */}
       </nav>
       <main>
+        <ToastContainer />
         <h1 className='main-text'>Upload and share images</h1>
         <div className='mid-line'>
-          <h3>Max size : 32 MB</h3>
+          <h3>Max size : 10 MB</h3>
           <h3>File Type: JPEG, PNG, GIF, etc.</h3>
         </div>
         <form id='upload-form' onSubmit={(e) => e.preventDefault()}>
