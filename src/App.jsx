@@ -93,6 +93,7 @@ function App() {
 
   const handleCopyURLClick = () => {
     console.log("copy url clicked");
+    toast("URL copied to clipboard", { type: 'success' });
     navigator.clipboard.writeText(fileURL);
   };
 
