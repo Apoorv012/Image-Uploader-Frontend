@@ -1,0 +1,13 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.my-image {
+    max-width: 96vw;
+    max-height: 96vh;
+    margin: auto 5px;
+}
